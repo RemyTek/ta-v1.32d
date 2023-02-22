@@ -536,7 +536,7 @@ static void PlayerModel_MenuInit( void )
 	s_playermodel.ports.generic.type  = MTYPE_BITMAP;
 	s_playermodel.ports.generic.name  = MODEL_PORTS;
 	s_playermodel.ports.generic.flags = QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-	s_playermodel.ports.generic.x     = 50;
+	s_playermodel.ports.generic.x     = 120;
 	s_playermodel.ports.generic.y     = 59;
 	s_playermodel.ports.width         = 274;
 	s_playermodel.ports.height        = 274;
@@ -544,7 +544,7 @@ static void PlayerModel_MenuInit( void )
 	y =	59;
 	for (i=0,k=0; i<PLAYERGRID_ROWS; i++)
 	{
-		x =	50;
+		x =	120;
 		for (j=0; j<PLAYERGRID_COLS; j++,k++)
 		{
 			s_playermodel.pics[k].generic.type	   = MTYPE_BITMAP;
@@ -611,7 +611,7 @@ static void PlayerModel_MenuInit( void )
 	s_playermodel.arrows.generic.type		= MTYPE_BITMAP;
 	s_playermodel.arrows.generic.name		= MODEL_ARROWS;
 	s_playermodel.arrows.generic.flags		= QMF_INACTIVE;
-	s_playermodel.arrows.generic.x			= 125;
+	s_playermodel.arrows.generic.x			= 196;
 	s_playermodel.arrows.generic.y			= 340;
 	s_playermodel.arrows.width				= 128;
 	s_playermodel.arrows.height				= 32;
@@ -620,7 +620,7 @@ static void PlayerModel_MenuInit( void )
 	s_playermodel.left.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
 	s_playermodel.left.generic.callback		= PlayerModel_MenuEvent;
 	s_playermodel.left.generic.id			= ID_PREVPAGE;
-	s_playermodel.left.generic.x			= 125;
+	s_playermodel.left.generic.x			= 196;
 	s_playermodel.left.generic.y			= 340;
 	s_playermodel.left.width  				= 64;
 	s_playermodel.left.height  				= 32;
@@ -630,7 +630,7 @@ static void PlayerModel_MenuInit( void )
 	s_playermodel.right.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
 	s_playermodel.right.generic.callback	= PlayerModel_MenuEvent;
 	s_playermodel.right.generic.id			= ID_NEXTPAGE;
-	s_playermodel.right.generic.x			= 125+61;
+	s_playermodel.right.generic.x			= 196+61;
 	s_playermodel.right.generic.y			= 340;
 	s_playermodel.right.width  				= 64;
 	s_playermodel.right.height  		    = 32;

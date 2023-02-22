@@ -92,6 +92,9 @@ static const char *servertype_items[] = {
 	"Tournament",
 	"Team Deathmatch",
 	"Capture the Flag",
+	"One Flag CTF",
+	"Overload",
+	"Harvester",
 	NULL
 };
 

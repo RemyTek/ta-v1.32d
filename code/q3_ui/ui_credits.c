@@ -29,7 +29,7 @@ static sfxHandle_t UI_CreditMenu_Key( int key ) {
 		return 0;
 	}
 
-	trap_Cmd_ExecuteText( EXEC_APPEND, "quit\n" );
+	UI_PopMenu();
 	return 0;
 }
 
@@ -43,7 +43,7 @@ static void UI_CreditMenu_Draw( void ) {
 	int		y;
 
 	y = 12;
-	UI_DrawProportionalString( 320, y, "id Software is:", UI_CENTER|UI_SMALLFONT, color_white );
+	UI_DrawProportionalString( 320, y, "id Software was:", UI_CENTER|UI_SMALLFONT, color_white );
 
 	y += 1.42 * PROP_HEIGHT * PROP_SMALL_SIZE_SCALE;
 	UI_DrawProportionalString( 320, y, "Programming", UI_CENTER|UI_SMALLFONT, color_white );

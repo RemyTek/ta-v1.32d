@@ -473,13 +473,17 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification )
 		trap_Cvar_SetValue( "r_subdivisions", 20 );
 	}
 
-	if ( s_graphicsoptions.filter.curvalue )
+	switch ( s_graphicsoptions.filter.curvalue )
 	{
+	case 0:
 		trap_Cvar_Set( "r_textureMode", "GL_LINEAR_MIPMAP_LINEAR" );
-	}
-	else
-	{
+		break;
+	case 1:
 		trap_Cvar_Set( "r_textureMode", "GL_LINEAR_MIPMAP_NEAREST" );
+		break;
+	case 2:
+		trap_Cvar_Set( "r_textureMode", "GL_NEAREST_MIPMAP_LINEAR" );
+		break;
 	}
 
 	trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart\n" );
@@ -608,13 +612,17 @@ static void GraphicsOptions_SetMenuItems( void )
 		break;
 	}
 
-	if ( !Q_stricmp( UI_Cvar_VariableString( "r_textureMode" ), "GL_LINEAR_MIPMAP_NEAREST" ) )
+	switch ( !Q_stricmp( UI_Cvar_VariableString( "r_textureMode" ), "GL_LINEAR_MIPMAP_NEAREST" ) )
 	{
+	case 0:
 		s_graphicsoptions.filter.curvalue = 0;
-	}
-	else
-	{
+		break;
+	case 1:
 		s_graphicsoptions.filter.curvalue = 1;
+		break;
+	case 2:
+		s_graphicsoptions.filter.curvalue = 2;
+		break;
 	}
 
 	if ( trap_Cvar_VariableValue( "r_lodBias" ) > 0 )
@@ -696,24 +704,33 @@ void GraphicsOptions_MenuInit( void )
 
 	static const char *resolutions[] = 
 	{
-		"320x240",
-		"400x300",
-		"512x384",
-		"640x480",
-		"800x600",
-		"960x720",
-		"1024x768",
-		"1152x864",
-		"1280x1024",
-		"1600x1200",
-		"2048x1536",
-		"856x480 wide screen",
+		"320x240 4:3",
+		"400x300 4:3",
+		"512x384 4:3",
+		"640x480 4:3",
+		"800x600 4:3",
+		"960x720 4:3",
+		"1024x768 4:3",
+		"1152x864 4:3",
+		"1280x1024 4:3",
+		"1600x1200 4:3",
+		"2048x1536 4:3",
+		"856x480 16:9",
+		"1280x720 16:9",
+		"1360x768 16:9",
+		"1366x768 16:9",
+		"1536x864 16:9",
+		"1600x900 16:9",
+		"1920x1080 16:9",
+		"2560x1440 16:9",
+		"3840x2160 16:9",
 		0
 	};
 	static const char *filter_names[] =
 	{
 		"Bilinear",
 		"Trilinear",
+		"Nearest",
 		NULL
 	};
 	static const char *quality_names[] =

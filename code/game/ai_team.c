@@ -1002,7 +1002,7 @@ void BotTeamOrders(bot_state_t *bs) {
 	}
 }
 
-#ifdef MISSIONPACK
+
 
 /*
 ==================
@@ -1031,12 +1031,16 @@ void Bot1FCTFOrders_FlagAtCenter(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the other will get the flag
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_GETFLAG);
+#endif
 				break;
 			}
 			case 3:
@@ -1045,17 +1049,23 @@ void Bot1FCTFOrders_FlagAtCenter(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the second one closest to the base will defend the base
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the other will get the flag
 				ClientName(teammates[2], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[2]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[2], VOICECHAT_GETFLAG);
+#endif
 				break;
 			}
 			default:
@@ -1071,14 +1081,18 @@ void Bot1FCTFOrders_FlagAtCenter(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				for (i = 0; i < attackers; i++) {
 					//
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_GETFLAG);
+#endif
 				}
 				//
 				break;
@@ -1095,12 +1109,16 @@ void Bot1FCTFOrders_FlagAtCenter(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the other will get the flag
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_GETFLAG);
+#endif
 				break;
 			}
 			case 3:
@@ -1109,17 +1127,23 @@ void Bot1FCTFOrders_FlagAtCenter(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the others should go for the enemy flag
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_GETFLAG);
+#endif
 				//
 				ClientName(teammates[2], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[2]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[2], VOICECHAT_GETFLAG);
+#endif
 				break;
 			}
 			default:
@@ -1135,14 +1159,18 @@ void Bot1FCTFOrders_FlagAtCenter(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				for (i = 0; i < attackers; i++) {
 					//
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_GETFLAG);
+#endif
 				}
 				//
 				break;
@@ -1180,7 +1208,9 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 				ClientName(other, name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_attackenemybase", name, NULL);
 				BotSayTeamOrder(bs, other);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, other, VOICECHAT_OFFENSE);
+#endif
 				break;
 			}
 			case 3:
@@ -1191,7 +1221,9 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 				ClientName(other, name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, other);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, other, VOICECHAT_DEFEND);
+#endif
 				//tell the one furthest from the base not carrying the flag to accompany the flag carrier
 				if (teammates[2] != bs->flagcarrier) other = teammates[2];
 				else other = teammates[1];
@@ -1200,17 +1232,23 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 					ClientName(bs->flagcarrier, carriername, sizeof(carriername));
 					if (bs->flagcarrier == bs->client) {
 						BotAI_BotInitialChat(bs, "cmd_accompanyme", name, NULL);
+#ifdef MISSIONPACK
 						BotSayVoiceTeamOrder(bs, other, VOICECHAT_FOLLOWME);
+#endif
 					}
 					else {
 						BotAI_BotInitialChat(bs, "cmd_accompany", name, carriername, NULL);
+#ifdef MISSIONPACK
 						BotSayVoiceTeamOrder(bs, other, VOICECHAT_FOLLOWFLAGCARRIER);
+#endif
 					}
 				}
 				else {
 					//
 					BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, other, VOICECHAT_GETFLAG);
+#endif
 				}
 				BotSayTeamOrder(bs, other);
 				break;
@@ -1231,7 +1269,9 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				if (bs->flagcarrier != -1) {
 					ClientName(bs->flagcarrier, carriername, sizeof(carriername));
@@ -1244,11 +1284,15 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 						ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 						if (bs->flagcarrier == bs->client) {
 							BotAI_BotInitialChat(bs, "cmd_accompanyme", name, NULL);
+#ifdef MISSIONPACK
 							BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_FOLLOWME);
+#endif
 						}
 						else {
 							BotAI_BotInitialChat(bs, "cmd_accompany", name, carriername, NULL);
+#ifdef MISSIONPACK
 							BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_FOLLOWFLAGCARRIER);
+#endif
 						}
 						BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
 					}
@@ -1263,7 +1307,9 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 						ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 						BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 						BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 						BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_GETFLAG);
+#endif
 					}
 				}
 				//
@@ -1283,7 +1329,9 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 				ClientName(other, name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, other);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, other, VOICECHAT_DEFEND);
+#endif
 				break;
 			}
 			case 3:
@@ -1294,7 +1342,9 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 				ClientName(other, name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, other);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, other, VOICECHAT_DEFEND);
+#endif
 				//tell the one furthest from the base not carrying the flag to accompany the flag carrier
 				if (teammates[2] != bs->flagcarrier) other = teammates[2];
 				else other = teammates[1];
@@ -1302,11 +1352,15 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 				ClientName(bs->flagcarrier, carriername, sizeof(carriername));
 				if (bs->flagcarrier == bs->client) {
 					BotAI_BotInitialChat(bs, "cmd_accompanyme", name, NULL);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, other, VOICECHAT_FOLLOWME);
+#endif
 				}
 				else {
 					BotAI_BotInitialChat(bs, "cmd_accompany", name, carriername, NULL);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, other, VOICECHAT_FOLLOWFLAGCARRIER);
+#endif
 				}
 				BotSayTeamOrder(bs, other);
 				break;
@@ -1327,7 +1381,9 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				ClientName(bs->flagcarrier, carriername, sizeof(carriername));
 				for (i = 0; i < attackers; i++) {
@@ -1339,11 +1395,15 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					if (bs->flagcarrier == bs->client) {
 						BotAI_BotInitialChat(bs, "cmd_accompanyme", name, NULL);
+#ifdef MISSIONPACK
 						BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_FOLLOWME);
+#endif
 					}
 					else {
 						BotAI_BotInitialChat(bs, "cmd_accompany", name, carriername, NULL);
+#ifdef MISSIONPACK
 						BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_FOLLOWFLAGCARRIER);
+#endif
 					}
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
 				}
@@ -1381,12 +1441,16 @@ void Bot1FCTFOrders_EnemyHasFlag(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_DEFEND);
+#endif
 				break;
 			}
 			case 3:
@@ -1395,17 +1459,23 @@ void Bot1FCTFOrders_EnemyHasFlag(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the second one closest to the base will defend the base
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_DEFEND);
+#endif
 				//the other will also defend the base
 				ClientName(teammates[2], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[2]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[2], VOICECHAT_DEFEND);
+#endif
 				break;
 			}
 			default:
@@ -1421,14 +1491,18 @@ void Bot1FCTFOrders_EnemyHasFlag(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				for (i = 0; i < attackers; i++) {
 					//
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_returnflag", name, NULL);
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_GETFLAG);
+#endif
 				}
 				//
 				break;
@@ -1445,12 +1519,16 @@ void Bot1FCTFOrders_EnemyHasFlag(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the other will get the flag
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_DEFEND);
+#endif
 				break;
 			}
 			case 3:
@@ -1459,17 +1537,23 @@ void Bot1FCTFOrders_EnemyHasFlag(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the others should go for the enemy flag
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_DEFEND);
+#endif
 				//
 				ClientName(teammates[2], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_returnflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[2]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[2], VOICECHAT_GETFLAG);
+#endif
 				break;
 			}
 			default:
@@ -1485,14 +1569,18 @@ void Bot1FCTFOrders_EnemyHasFlag(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				for (i = 0; i < attackers; i++) {
 					//
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_returnflag", name, NULL);
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_GETFLAG);
+#endif
 				}
 				//
 				break;
@@ -1528,12 +1616,16 @@ void Bot1FCTFOrders_EnemyDroppedFlag(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the other will get the flag
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_GETFLAG);
+#endif
 				break;
 			}
 			case 3:
@@ -1542,17 +1634,23 @@ void Bot1FCTFOrders_EnemyDroppedFlag(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the second one closest to the base will defend the base
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_DEFEND);
+#endif
 				//the other will get the flag
 				ClientName(teammates[2], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[2]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[2], VOICECHAT_GETFLAG);
+#endif
 				break;
 			}
 			default:
@@ -1568,14 +1666,18 @@ void Bot1FCTFOrders_EnemyDroppedFlag(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				for (i = 0; i < attackers; i++) {
 					//
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_GETFLAG);
+#endif
 				}
 				//
 				break;
@@ -1592,12 +1694,16 @@ void Bot1FCTFOrders_EnemyDroppedFlag(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the other will get the flag
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_GETFLAG);
+#endif
 				break;
 			}
 			case 3:
@@ -1606,17 +1712,23 @@ void Bot1FCTFOrders_EnemyDroppedFlag(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the others should go for the enemy flag
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_GETFLAG);
+#endif
 				//
 				ClientName(teammates[2], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				BotSayTeamOrder(bs, teammates[2]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[2], VOICECHAT_GETFLAG);
+#endif
 				break;
 			}
 			default:
@@ -1632,14 +1744,18 @@ void Bot1FCTFOrders_EnemyDroppedFlag(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				for (i = 0; i < attackers; i++) {
 					//
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_GETFLAG);
+#endif
 				}
 				//
 				break;
@@ -1689,12 +1805,16 @@ void BotObeliskOrders(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the other will attack the enemy base
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_attackenemybase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_OFFENSE);
+#endif
 				break;
 			}
 			case 3:
@@ -1703,17 +1823,23 @@ void BotObeliskOrders(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the one second closest to the base also defends the base
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_DEFEND);
+#endif
 				//the other one attacks the enemy base
 				ClientName(teammates[2], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_attackenemybase", name, NULL);
 				BotSayTeamOrder(bs, teammates[2]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[2], VOICECHAT_OFFENSE);
+#endif
 				break;
 			}
 			default:
@@ -1729,14 +1855,18 @@ void BotObeliskOrders(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				for (i = 0; i < attackers; i++) {
 					//
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_attackenemybase", name, NULL);
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_OFFENSE);
+#endif
 				}
 				//
 				break;
@@ -1753,12 +1883,16 @@ void BotObeliskOrders(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the other will attack the enemy base
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_attackenemybase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_OFFENSE);
+#endif
 				break;
 			}
 			case 3:
@@ -1767,17 +1901,23 @@ void BotObeliskOrders(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the others attack the enemy base
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_attackenemybase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_OFFENSE);
+#endif
 				//
 				ClientName(teammates[2], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_attackenemybase", name, NULL);
 				BotSayTeamOrder(bs, teammates[2]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[2], VOICECHAT_OFFENSE);
+#endif
 				break;
 			}
 			default:
@@ -1793,14 +1933,18 @@ void BotObeliskOrders(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				for (i = 0; i < attackers; i++) {
 					//
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_attackenemybase", name, NULL);
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_OFFENSE);
+#endif
 				}
 				//
 				break;
@@ -1837,12 +1981,16 @@ void BotHarvesterOrders(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the other will harvest
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_harvest", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_OFFENSE);
+#endif
 				break;
 			}
 			case 3:
@@ -1851,17 +1999,23 @@ void BotHarvesterOrders(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the one second closest to the base also defends the base
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_DEFEND);
+#endif
 				//the other one goes harvesting
 				ClientName(teammates[2], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_harvest", name, NULL);
 				BotSayTeamOrder(bs, teammates[2]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[2], VOICECHAT_OFFENSE);
+#endif
 				break;
 			}
 			default:
@@ -1877,14 +2031,18 @@ void BotHarvesterOrders(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				for (i = 0; i < attackers; i++) {
 					//
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_harvest", name, NULL);
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_OFFENSE);
+#endif
 				}
 				//
 				break;
@@ -1901,12 +2059,16 @@ void BotHarvesterOrders(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the other will harvest
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_harvest", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_OFFENSE);
+#endif
 				break;
 			}
 			case 3:
@@ -1915,17 +2077,23 @@ void BotHarvesterOrders(bot_state_t *bs) {
 				ClientName(teammates[0], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, teammates[0]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[0], VOICECHAT_DEFEND);
+#endif
 				//the others go harvesting
 				ClientName(teammates[1], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_harvest", name, NULL);
 				BotSayTeamOrder(bs, teammates[1]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[1], VOICECHAT_OFFENSE);
+#endif
 				//
 				ClientName(teammates[2], name, sizeof(name));
 				BotAI_BotInitialChat(bs, "cmd_harvest", name, NULL);
 				BotSayTeamOrder(bs, teammates[2]);
+#ifdef MISSIONPACK
 				BotSayVoiceTeamOrder(bs, teammates[2], VOICECHAT_OFFENSE);
+#endif
 				break;
 			}
 			default:
@@ -1941,14 +2109,18 @@ void BotHarvesterOrders(bot_state_t *bs) {
 					ClientName(teammates[i], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[i], VOICECHAT_DEFEND);
+#endif
 				}
 				for (i = 0; i < attackers; i++) {
 					//
 					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
 					BotAI_BotInitialChat(bs, "cmd_harvest", name, NULL);
 					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
+#ifdef MISSIONPACK
 					BotSayVoiceTeamOrder(bs, teammates[numteammates - i - 1], VOICECHAT_OFFENSE);
+#endif
 				}
 				//
 				break;
@@ -1956,7 +2128,7 @@ void BotHarvesterOrders(bot_state_t *bs) {
 		}
 	}
 }
-#endif
+
 
 /*
 ==================
@@ -2086,7 +2258,7 @@ void BotTeamAI(bot_state_t *bs) {
 			}
 			break;
 		}
-#ifdef MISSIONPACK
+
 		case GT_1FCTF:
 		{
 			if (bs->numteammates != numteammates || bs->flagstatuschanged || bs->forceorders) {
@@ -2142,7 +2314,7 @@ void BotTeamAI(bot_state_t *bs) {
 			}
 			break;
 		}
-#endif
+
 	}
 }
 

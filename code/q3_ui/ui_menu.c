@@ -17,9 +17,10 @@ MAIN MENU
 #define ID_SETUP				12
 #define ID_DEMOS				13
 #define ID_CINEMATICS			14
-#define ID_TEAMARENA		15
+#define ID_TEAMARENA			15
 #define ID_MODS					16
-#define ID_EXIT					17
+#define ID_CREDITS				17
+#define ID_EXIT					18
 
 #define MAIN_BANNER_MODEL				"models/mapobjects/banner/banner5.md3"
 #define MAIN_MENU_VERTICAL_SPACING		34
@@ -35,6 +36,7 @@ typedef struct {
 	menutext_s		cinematics;
 	menutext_s		teamArena;
 	menutext_s		mods;
+	menutext_s		credits;
 	menutext_s		exit;
 
 	qhandle_t		bannerModel;
@@ -59,8 +61,8 @@ static void MainMenu_ExitAction( qboolean result ) {
 	if( !result ) {
 		return;
 	}
-	UI_PopMenu();
-	UI_CreditMenu();
+	trap_Cmd_ExecuteText( EXEC_APPEND, "quit\n" );
+
 }
 
 
@@ -103,6 +105,10 @@ void Main_MenuEvent (void* ptr, int event) {
 	case ID_TEAMARENA:
 		trap_Cvar_Set( "fs_game", "missionpack");
 		trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart;" );
+		break;
+
+	case ID_CREDITS:
+		UI_CreditMenu();
 		break;
 
 	case ID_EXIT:
@@ -201,12 +207,12 @@ static void Main_MenuDraw( void ) {
 		Menu_Draw( &s_main.menu );		
 	}
 
-	if (uis.demoversion) {
-		UI_DrawProportionalString( 320, 372, "DEMO      FOR MATURE AUDIENCES      DEMO", UI_CENTER|UI_SMALLFONT, color );
-		UI_DrawString( 320, 400, "Quake III Arena(c) 1999-2000, Id Software, Inc.  All Rights Reserved", UI_CENTER|UI_SMALLFONT, color );
-	} else {
-		UI_DrawString( 320, 450, "Quake III Arena(c) 1999-2000, Id Software, Inc.  All Rights Reserved", UI_CENTER|UI_SMALLFONT, color );
-	}
+
+
+
+
+
+
 }
 
 
@@ -290,7 +296,7 @@ void UI_MainMenu( void ) {
 	s_main.menu.wrapAround = qtrue;
 	s_main.menu.showlogo = qtrue;
 
-	y = 134;
+	y = 164;
 	s_main.singleplayer.generic.type		= MTYPE_PTEXT;
 	s_main.singleplayer.generic.flags		= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
 	s_main.singleplayer.generic.x			= 320;
@@ -371,6 +377,17 @@ void UI_MainMenu( void ) {
 	s_main.mods.style					= style;
 
 	y += MAIN_MENU_VERTICAL_SPACING;
+	s_main.credits.generic.type				= MTYPE_PTEXT;
+	s_main.credits.generic.flags			= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
+	s_main.credits.generic.x				= 320;
+	s_main.credits.generic.y				= y;
+	s_main.credits.generic.id				= ID_CREDITS;
+	s_main.credits.generic.callback			= Main_MenuEvent; 
+	s_main.credits.string					= "CREDITS";
+	s_main.credits.color					= color_red;
+	s_main.credits.style					= style;
+
+	y += MAIN_MENU_VERTICAL_SPACING;
 	s_main.exit.generic.type				= MTYPE_PTEXT;
 	s_main.exit.generic.flags				= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
 	s_main.exit.generic.x					= 320;
@@ -389,6 +406,7 @@ void UI_MainMenu( void ) {
 	if (teamArena) {
 		Menu_AddItem( &s_main.menu,	&s_main.teamArena );
 	}
+	Menu_AddItem( &s_main.menu,	&s_main.credits );
 	Menu_AddItem( &s_main.menu,	&s_main.mods );
 	Menu_AddItem( &s_main.menu,	&s_main.exit );             
 

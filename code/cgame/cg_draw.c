@@ -515,11 +515,11 @@ CG_DrawStatusBarFlag
 
 ================
 */
-#ifndef MISSIONPACK
+
 static void CG_DrawStatusBarFlag( float x, int team ) {
 	CG_DrawFlagModel( x, cgs.screenYmax + 1 - ICON_SIZE, ICON_SIZE, ICON_SIZE, team, qfalse );
 }
-#endif // MISSIONPACK
+
 
 
 /*
@@ -566,9 +566,9 @@ static void CG_DrawStatusBar( void ) {
 	vec3_t		angles;
 	vec3_t		origin;
 	float		y;
-#ifdef MISSIONPACK
+
 	qhandle_t	handle;
-#endif
+
 	static float colors[4][4] = { 
 //		{ 0.2, 1.0, 0.2, 1.0 } , { 1.0, 0.2, 0.2, 1.0 }, {0.5, 0.5, 0.5, 1} };
 		{ 1.0f, 0.69f, 0.0f, 1.0f },    // normal
@@ -581,7 +581,7 @@ static void CG_DrawStatusBar( void ) {
 	}
 
 	// draw the team background
-	CG_DrawTeamBackground( cgs.screenXmin, cgs.screenYmax - STATUSBAR_HEIGHT + 1,
+	CG_DrawTeamBackground( cgs.screenXmin - 1, cgs.screenYmax - STATUSBAR_HEIGHT + 1,
 		cgs.screenXmax - cgs.screenXmin + 1, STATUSBAR_HEIGHT, 
 		0.33f, cg.snap->ps.persistant[ PERS_TEAM ] );
 
@@ -605,11 +605,11 @@ static void CG_DrawStatusBar( void ) {
 	CG_DrawStatusBarHead( 185 + CHAR_WIDTH*3 + TEXT_ICON_SPACE );
 
 	if( cg.predictedPlayerState.powerups[PW_REDFLAG] ) {
-		CG_DrawStatusBarFlag( 185 + CHAR_WIDTH*3 + TEXT_ICON_SPACE + ICON_SIZE, TEAM_RED );
+		CG_DrawStatusBarFlag( 416 + CHAR_WIDTH*3 + TEXT_ICON_SPACE + ICON_SIZE, TEAM_RED );
 	} else if( cg.predictedPlayerState.powerups[PW_BLUEFLAG] ) {
-		CG_DrawStatusBarFlag( 185 + CHAR_WIDTH*3 + TEXT_ICON_SPACE + ICON_SIZE, TEAM_BLUE );
+		CG_DrawStatusBarFlag( 416 + CHAR_WIDTH*3 + TEXT_ICON_SPACE + ICON_SIZE, TEAM_BLUE );
 	} else if( cg.predictedPlayerState.powerups[PW_NEUTRALFLAG] ) {
-		CG_DrawStatusBarFlag( 185 + CHAR_WIDTH*3 + TEXT_ICON_SPACE + ICON_SIZE, TEAM_FREE );
+		CG_DrawStatusBarFlag( 416 + CHAR_WIDTH*3 + TEXT_ICON_SPACE + ICON_SIZE, TEAM_FREE );
 	}
 
 	if ( ps->stats[ STAT_ARMOR ] ) {
@@ -620,7 +620,7 @@ static void CG_DrawStatusBar( void ) {
 		CG_Draw3DModel( 370 + CHAR_WIDTH*3 + TEXT_ICON_SPACE, y, ICON_SIZE, ICON_SIZE,
 					   cgs.media.armorModel, 0, origin, angles );
 	}
-#ifdef MISSIONPACK
+
 	if( cgs.gametype == GT_HARVESTER ) {
 		origin[0] = 90;
 		origin[1] = 0;
@@ -633,7 +633,7 @@ static void CG_DrawStatusBar( void ) {
 		}
 		CG_Draw3DModel( 640 - (TEXT_ICON_SPACE + ICON_SIZE), 416, ICON_SIZE, ICON_SIZE, handle, 0, origin, angles );
 	}
-#endif
+
 	//
 	// ammo
 	//
@@ -720,7 +720,7 @@ static void CG_DrawStatusBar( void ) {
 		}
 	}
 
-#ifdef MISSIONPACK
+
 	//
 	// cubes
 	//
@@ -742,7 +742,7 @@ static void CG_DrawStatusBar( void ) {
 			CG_DrawPic( 640 - (TEXT_ICON_SPACE + ICON_SIZE), y, ICON_SIZE, ICON_SIZE, handle );
 		}
 	}
-#endif
+
 }
 #endif
 
@@ -1131,7 +1131,7 @@ CG_DrawScores
 Draw the small two score display
 =================
 */
-#ifndef MISSIONPACK
+
 static float CG_DrawScores( float y ) {
 	const char	*s;
 	int			s1, s2, score;
@@ -1204,7 +1204,7 @@ static float CG_DrawScores( float y ) {
 			}
 		}
 
-#ifdef MISSIONPACK
+
 		if ( cgs.gametype == GT_1FCTF ) {
 			// Display flag status
 			item = BG_FindItemForPowerup( PW_NEUTRALFLAG );
@@ -1216,7 +1216,7 @@ static float CG_DrawScores( float y ) {
 				}
 			}
 		}
-#endif
+
 		if ( cgs.gametype >= GT_CTF ) {
 			v = cgs.capturelimit;
 		} else {
@@ -1292,7 +1292,7 @@ static float CG_DrawScores( float y ) {
 
 	return y1 - 8;
 }
-#endif // MISSIONPACK
+
 
 
 /*
@@ -1333,7 +1333,7 @@ static float CG_DrawPowerups( float y ) {
 		t = ps->powerups[ i ] - cg.time;
 		// ZOID--don't draw if the power up has unlimited time (999 seconds)
 		// This is true of the CTF flags
-		if ( t < 0 || t > 999000) {
+		if ( t < 1 || t > 999000) {
 			continue;
 		}
 
@@ -1353,7 +1353,7 @@ static float CG_DrawPowerups( float y ) {
 	}
 
 	// draw the icons and timers
-	x = cgs.screenXmax + 1 - ICON_SIZE - CHAR_WIDTH * 2;
+	x = cgs.screenXmax - 2 - ICON_SIZE - CHAR_WIDTH * 2;
 	for ( i = 0 ; i < active ; i++ ) {
 		item = BG_FindItemForPowerup( sorted[i] );
 
@@ -1386,7 +1386,7 @@ static float CG_DrawPowerups( float y ) {
 				size = ICON_SIZE;
 			}
 
-			CG_DrawPic( cgs.screenXmax + 1 - size, y + ICON_SIZE / 2 - size / 2, 
+			CG_DrawPic( cgs.screenXmax - 2 - size, y + ICON_SIZE / 2 - size / 2, 
 				size, size, trap_R_RegisterShader( item->icon ) );
 		} // if ( item )
 	}
@@ -1562,36 +1562,36 @@ static void CG_DrawTeamInfo( void ) {
 CG_DrawHoldableItem
 ===================
 */
-#ifndef MISSIONPACK
+
 static void CG_DrawHoldableItem( void ) { 
 	int		value;
 
 	value = cg.snap->ps.stats[STAT_HOLDABLE_ITEM];
 	if ( value ) {
 		CG_RegisterItemVisuals( value );
-		CG_DrawPic( cgs.screenXmax + 1 - ICON_SIZE, (SCREEN_HEIGHT-ICON_SIZE)/2, ICON_SIZE, ICON_SIZE, cg_items[ value ].icon );
+		CG_DrawPic( cgs.screenXmax - 2 - ICON_SIZE, (SCREEN_HEIGHT-ICON_SIZE)/2, ICON_SIZE, ICON_SIZE, cg_items[ value ].icon );
 	}
 }
-#endif // MISSIONPACK
 
-#ifdef MISSIONPACK
+
+
 /*
 ===================
 CG_DrawPersistantPowerup
 ===================
 */
-#if 0 // sos001208 - DEAD
+
 static void CG_DrawPersistantPowerup( void ) { 
 	int		value;
 
 	value = cg.snap->ps.stats[STAT_PERSISTANT_POWERUP];
 	if ( value ) {
 		CG_RegisterItemVisuals( value );
-		CG_DrawPic( 640-ICON_SIZE, (SCREEN_HEIGHT-ICON_SIZE)/2 - ICON_SIZE, ICON_SIZE, ICON_SIZE, cg_items[ value ].icon );
+		CG_DrawPic( cgs.screenXmin + 2, cgs.screenYmax - ICON_SIZE - 2, ICON_SIZE, ICON_SIZE, cg_items[ value ].icon );
 	}
 }
-#endif
-#endif // MISSIONPACK
+
+
 
 
 /*
@@ -2369,7 +2369,7 @@ static void CG_DrawAmmoWarning( void ) {
 }
 
 
-#ifdef MISSIONPACK
+
 /*
 =================
 CG_DrawProxWarning
@@ -2403,8 +2403,8 @@ static void CG_DrawProxWarning( void ) {
 		Com_sprintf( s, sizeof(s), "YOU HAVE BEEN MINED" );
 	}
 
-	CG_DrawString( 320, 64 + 64 + BIGCHAR_HEIGHT, s, g_color_table[ColorIndex(COLOR_RED)], BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0, DF_SHADOW | DF_FORCE_COLOR | DF_CENTER );
-#endif
+	CG_DrawString( 320, 64 + 64 + BIGCHAR_HEIGHT, s, g_color_table[ColorIndex(COLOR_RED)], BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0, DS_SHADOW | DS_FORCE_COLOR | DS_CENTER );
+}
 
 
 /*
@@ -2468,14 +2468,14 @@ static void CG_DrawWarmup( void ) {
 			s = "Team Deathmatch";
 		} else if ( cgs.gametype == GT_CTF ) {
 			s = "Capture the Flag";
-#ifdef MISSIONPACK
+
 		} else if ( cgs.gametype == GT_1FCTF ) {
 			s = "One Flag CTF";
 		} else if ( cgs.gametype == GT_OBELISK ) {
 			s = "Overload";
 		} else if ( cgs.gametype == GT_HARVESTER ) {
 			s = "Harvester";
-#endif
+
 		} else {
 			s = "";
 		}
@@ -2604,18 +2604,18 @@ static void CG_Draw2D( stereoFrame_t stereoFrame )
       
 			CG_DrawAmmoWarning();
 
-#ifdef MISSIONPACK
+
 			CG_DrawProxWarning();
-#endif      
+
 			CG_DrawCrosshair();
 			CG_DrawCrosshairNames();
 			CG_DrawWeaponSelect();
 
-#ifndef MISSIONPACK
+
 			CG_DrawHoldableItem();
-#else
-			//CG_DrawPersistantPowerup();
-#endif
+
+			CG_DrawPersistantPowerup();
+
 			CG_DrawReward();
 		}
     
@@ -2732,7 +2732,7 @@ static void CG_WarmupEvents( void ) {
 				trap_S_StartLocalSound( cgs.media.countFightSound, CHAN_ANNOUNCER );
 				cg.warmupFightSound = cg.time + 750;
 			}
-			CG_CenterPrint( "FIGHT!", 120, GIANTCHAR_WIDTH*2 );
+			CG_CenterPrint( "FIGHT!", 120, GIANTCHAR_WIDTH );
 			break;
 
 		case 1:

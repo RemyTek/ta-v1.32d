@@ -68,7 +68,7 @@ tryagain:
 		goto tryagain;
 	}
 
-	if ( weaponNum == WP_MACHINEGUN || weaponNum == WP_GAUNTLET || weaponNum == WP_BFG ) {
+	if ( weaponNum == WP_MACHINEGUN || weaponNum == WP_GAUNTLET || weaponNum == WP_CHAINGUN || weaponNum == WP_BFG ) {
 		strcpy( path, item->world_model[0] );
 		COM_StripExtension( path, path );
 		strcat( path, "_barrel.md3" );
@@ -89,11 +89,27 @@ tryagain:
 		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
 		break;
 
+	case WP_HMG:
+		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
+		break;
+
+	case WP_CHAINGUN:
+		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
+		break;
+
 	case WP_SHOTGUN:
 		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
 		break;
 
+	case WP_NAILGUN:
+		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
+		break;
+
 	case WP_GRENADE_LAUNCHER:
+		MAKERGB( pi->flashDlightColor, 1, 0.7f, 0.5f );
+		break;
+		
+	case WP_PROX_LAUNCHER:
 		MAKERGB( pi->flashDlightColor, 1, 0.7f, 0.5f );
 		break;
 
@@ -814,7 +830,7 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 	//
 	// add the spinning barrel
 	//
-	if ( pi->realWeapon == WP_MACHINEGUN || pi->realWeapon == WP_GAUNTLET || pi->realWeapon == WP_BFG ) {
+	if ( pi->realWeapon == WP_MACHINEGUN || pi->realWeapon == WP_GAUNTLET || pi->realWeapon == WP_CHAINGUN || pi->realWeapon == WP_BFG ) {
 		vec3_t	angles;
 
 		memset( &barrel, 0, sizeof(barrel) );

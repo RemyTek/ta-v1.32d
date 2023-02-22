@@ -607,7 +607,7 @@ static void CG_AddSpriteExplosion( localEntity_t *le ) {
 }
 
 
-#ifdef MISSIONPACK
+
 /*
 ====================
 CG_AddKamikaze
@@ -637,7 +637,7 @@ void CG_AddKamikaze( localEntity_t *le ) {
 		memset(&shockwave, 0, sizeof(shockwave));
 		shockwave.hModel = cgs.media.kamikazeShockWave;
 		shockwave.reType = RT_MODEL;
-		shockwave.shaderTime = re->shaderTime;
+		shockwave.u.shaderTime = re->u.shaderTime;
 		VectorCopy(re->origin, shockwave.origin);
 
 		c = (float)(t - KAMI_SHOCKWAVE_STARTTIME) / (float)(KAMI_SHOCKWAVE_ENDTIME - KAMI_SHOCKWAVE_STARTTIME);
@@ -706,7 +706,7 @@ void CG_AddKamikaze( localEntity_t *le ) {
 		memset(&shockwave, 0, sizeof(shockwave));
 		shockwave.hModel = cgs.media.kamikazeShockWave;
 		shockwave.reType = RT_MODEL;
-		shockwave.shaderTime = re->shaderTime;
+		shockwave.u.shaderTime = re->u.shaderTime;
 		VectorCopy(re->origin, shockwave.origin);
 
 		test[0] = le->angles.trBase[0];
@@ -767,7 +767,7 @@ void CG_AddInvulnerabilityJuiced( localEntity_t *le ) {
 		trap_R_AddRefEntityToScene( &le->refEntity );
 	}
 }
-#endif
+
 
 
 /*
@@ -936,7 +936,7 @@ void CG_AddLocalEntities( void ) {
 			CG_AddScorePlum( le );
 			break;
 
-#ifdef MISSIONPACK
+
 		case LE_KAMIKAZE:
 			CG_AddKamikaze( le );
 			break;
@@ -946,7 +946,7 @@ void CG_AddLocalEntities( void ) {
 		case LE_INVULJUICED:
 			CG_AddInvulnerabilityJuiced( le );
 			break;
-#endif
+
 		case LE_SHOWREFENTITY:
 			CG_AddRefEntity( le );
 			break;

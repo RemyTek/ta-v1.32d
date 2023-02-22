@@ -1332,7 +1332,7 @@ static qboolean ValidVoteCommand( int clientNum, char *command )
 
 	if ( i == ARRAY_LEN( voteCommands ) ) {
 		trap_SendServerCommand( clientNum, "print \"Invalid vote command.\nVote commands are: \n"
-			" g_gametype <n|ffa|duel|tdm|ctf>\n"
+			" g_gametype <n|ffa|duel|tdm|ctf|oneflag|overload|harvester>\n"
 			" map_restart, map <mapname>, rotate [round], nextmap\n"
 			" kick <player>, clientkick <clientnum>\n"
 			" g_unlagged <0|1>, g_warmup <-1|0|seconds>\n"
@@ -1346,6 +1346,9 @@ static qboolean ValidVoteCommand( int clientNum, char *command )
 		else if ( !Q_stricmp( command, "duel" ) ) i = GT_TOURNAMENT;
 		else if ( !Q_stricmp( command, "tdm" ) ) i = GT_TEAM;
 		else if ( !Q_stricmp( command, "ctf" ) ) i = GT_CTF;
+		else if ( !Q_stricmp( command, "oneflag" ) ) i = GT_1FCTF;
+		else if ( !Q_stricmp( command, "harvester" ) ) i = GT_HARVESTER;
+		else if ( !Q_stricmp( command, "overload" ) ) i = GT_OBELISK;
 		else 
 		{
 			i = atoi( command );

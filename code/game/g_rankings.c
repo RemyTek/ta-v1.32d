@@ -193,6 +193,18 @@ void G_RankFireWeapon( int self, int weapon )
 	case WP_GRAPPLING_HOOK:
 		trap_RankReportInt( self, -1, QGR_KEY_SHOT_FIRED_GRAPPLE, 1, 1 );
 		break;
+	case WP_NAILGUN:
+		trap_RankReportInt( self, -1, QGR_KEY_SHOT_FIRED_NAILGUN, 1, 1 );
+		break;
+	case WP_PROX_LAUNCHER:
+		trap_RankReportInt( self, -1, QGR_KEY_SHOT_FIRED_PROX_LAUNCHER, 1, 1 );
+		break;
+	case WP_CHAINGUN:
+		trap_RankReportInt( self, -1, QGR_KEY_SHOT_FIRED_CHAINGUN, 1, 1 );
+		break;
+	case WP_HMG:
+		trap_RankReportInt( self, -1, QGR_KEY_SHOT_FIRED_HMG, 1, 1 );
+		break;
 	default:
 		break;
 	}
@@ -324,6 +336,22 @@ void G_RankDamage( int self, int attacker, int damage, int means_of_death )
 		key_hit = QGR_KEY_HIT_TAKEN_GRAPPLE;
 		key_damage = QGR_KEY_DAMAGE_TAKEN_GRAPPLE;
 		break;
+	case MOD_NAIL:
+		key_hit = QGR_KEY_HIT_TAKEN_NAIL;
+		key_damage = QGR_KEY_DAMAGE_TAKEN_NAIL;
+		break;
+	case MOD_CHAINGUN:
+		key_hit = QGR_KEY_HIT_TAKEN_CHAINGUN;
+		key_damage = QGR_KEY_DAMAGE_TAKEN_CHAINGUN;
+		break;
+	case MOD_PROXIMITY_MINE:
+		key_hit = QGR_KEY_HIT_TAKEN_PROXIMITY_MINE;
+		key_damage = QGR_KEY_DAMAGE_PROXIMITY_MINE;
+		break;
+	case MOD_HMG:
+		key_hit = QGR_KEY_HIT_TAKEN_HMG;
+		key_damage = QGR_KEY_DAMAGE_TAKEN_HMG;
+		break;
 	default:
 		key_hit = QGR_KEY_HIT_TAKEN_UNKNOWN;
 		key_damage = QGR_KEY_DAMAGE_TAKEN_UNKNOWN;
@@ -400,6 +428,22 @@ void G_RankDamage( int self, int attacker, int damage, int means_of_death )
 		case MOD_GRAPPLE:
 			key_hit = QGR_KEY_HIT_GIVEN_GRAPPLE;
 			key_damage = QGR_KEY_DAMAGE_GIVEN_GRAPPLE;
+			break;
+		case MOD_NAIL:
+			key_hit = QGR_KEY_HIT_GIVEN_NAIL;
+			key_damage = QGR_KEY_DAMAGE_GIVEN_NAIL;
+			break;
+		case MOD_CHAINGUN:
+			key_hit = QGR_KEY_HIT_GIVEN_CHAINGUN;
+			key_damage = QGR_KEY_DAMAGE_GIVEN_CHAINGUN;
+			break;
+		case MOD_PROXIMITY_MINE:
+			key_hit = QGR_KEY_HIT_GIVEN_PROXIMITY_MINE;
+			key_damage = QGR_KEY_DAMAGE_GIVEN_PROXIMITY_MINE;
+			break;
+		case MOD_HMG:
+			key_hit = QGR_KEY_HIT_GIVEN_HMG;
+			key_damage = QGR_KEY_DAMAGE_GIVEN_HMG;
 			break;
 		default:
 			key_hit = QGR_KEY_HIT_GIVEN_UNKNOWN;
@@ -558,6 +602,18 @@ void G_RankPlayerDie( int self, int attacker, int means_of_death )
 		case MOD_GRAPPLE:
 			trap_RankReportInt( p1, p2, QGR_KEY_SUICIDE_GRAPPLE, 1, 1 );
 			break;
+		case MOD_NAIL:
+			trap_RankReportInt( p1, p2, QGR_KEY_SUICIDE_NAILGUN, 1, 1 );
+			break;
+		case MOD_CHAINGUN:
+			trap_RankReportInt( p1, p2, QGR_KEY_SUICIDE_CHAINGUN, 1, 1 );
+			break;
+		case MOD_PROXIMITY_MINE:
+			trap_RankReportInt( p1, p2, QGR_KEY_SUICIDE_PROX_LAUNCHER, 1, 1 );
+			break;
+		case MOD_HMG:
+			trap_RankReportInt( p1, p2, QGR_KEY_SUICIDE_HMG, 1, 1 );
+			break;
 		default:
 			trap_RankReportInt( p1, p2, QGR_KEY_SUICIDE_UNKNOWN, 1, 1 );
 			break;
@@ -605,6 +661,18 @@ void G_RankPlayerDie( int self, int attacker, int means_of_death )
 			break;
 		case MOD_GRAPPLE:
 			trap_RankReportInt( p1, p2, QGR_KEY_FRAG_GRAPPLE, 1, 1 );
+			break;
+		case MOD_NAIL:
+			trap_RankReportInt( p1, p2, QGR_KEY_FRAG_NAILGUN, 1, 1 );
+			break;
+		case MOD_CHAINGUN:
+			trap_RankReportInt( p1, p2, QGR_KEY_FRAG_CHAINGUN, 1, 1 );
+			break;
+		case MOD_PROXIMITY_MINE:
+			trap_RankReportInt( p1, p2, QGR_KEY_FRAG_PROX_LAUNCHER, 1, 1 );
+			break;
+		case MOD_HMG:
+			trap_RankReportInt( p1, p2, QGR_KEY_FRAG_HMG, 1, 1 );
 			break;
 		default:
 			trap_RankReportInt( p1, p2, QGR_KEY_FRAG_UNKNOWN, 1, 1 );
@@ -672,6 +740,18 @@ void G_RankWeaponTime( int self, int weapon )
 	case WP_GRAPPLING_HOOK:
 		trap_RankReportInt( self, -1, QGR_KEY_TIME_GRAPPLE, time, 1 );
 		break;
+	case WP_NAILGUN:
+		trap_RankReportInt( self, -1, QGR_KEY_TIME_NAILGUN, time, 1 );
+		break;
+	case WP_PROX_LAUNCHER:
+		trap_RankReportInt( self, -1, QGR_KEY_TIME_PROX_LAUNCHER, time, 1 );
+		break;
+	case WP_CHAINGUN:
+		trap_RankReportInt( self, -1, QGR_KEY_TIME_CHAINGUN, time, 1 );
+		break;
+	case WP_HMG:
+		trap_RankReportInt( self, -1, QGR_KEY_TIME_HMG, time, 1 );
+		break;
 	default:
 		break;
 	}
@@ -722,6 +802,18 @@ void G_RankPickupWeapon( int self, int weapon )
 		break;
 	case WP_GRAPPLING_HOOK:
 		trap_RankReportInt( self, -1, QGR_KEY_PICKUP_GRAPPLE, 1, 1 );
+		break;
+	case WP_NAILGUN:
+		trap_RankReportInt( self, -1, QGR_KEY_PICKUP_NAILGUN, 1, 1 );
+		break;
+	case WP_PROX_LAUNCHER:
+		trap_RankReportInt( self, -1, QGR_KEY_PICKUP_PROX_LAUNCHER, 1, 1 );
+		break;
+	case WP_CHAINGUN:
+		trap_RankReportInt( self, -1, QGR_KEY_PICKUP_CHAINGUN, 1, 1 );
+		break;
+	case WP_HMG:
+		trap_RankReportInt( self, -1, QGR_KEY_PICKUP_HMG, 1, 1 );
 		break;
 	default:
 		break;
@@ -777,6 +869,22 @@ void G_RankPickupAmmo( int self, int weapon, int quantity )
 	case WP_BFG:
 		trap_RankReportInt( self, -1, QGR_KEY_BOXES_BFG_AMMO, 1, 1 );
 		trap_RankReportInt( self, -1, QGR_KEY_ROUNDS_BFG_AMMO, quantity, 1 );
+		break;
+	case WP_NAILGUN:
+		trap_RankReportInt( self, -1, QGR_KEY_BOXES_NAILGUN_AMMO, 1, 1 );
+		trap_RankReportInt( self, -1, QGR_KEY_ROUNDS_NAILGUN_AMMO, quantity, 1 );
+		break;
+	case WP_PROX_LAUNCHER:
+		trap_RankReportInt( self, -1, QGR_KEY_BOXES_PROX_LAUNCHER_AMMO, 1, 1 );
+		trap_RankReportInt( self, -1, QGR_KEY_ROUNDS_PROX_LAUNCHER_AMMO, quantity, 1 );
+		break;
+	case WP_CHAINGUN:
+		trap_RankReportInt( self, -1, QGR_KEY_BOXES_CHAINGUN_AMMO, 1, 1 );
+		trap_RankReportInt( self, -1, QGR_KEY_ROUNDS_CHAINGUN_AMMO, quantity, 1 );
+		break;
+	case WP_HMG:
+		trap_RankReportInt( self, -1, QGR_KEY_BOXES_AMMO_HMG, 1, 1 );
+		trap_RankReportInt( self, -1, QGR_KEY_ROUNDS_AMMO_HMG, quantity, 1 );
 		break;
 	default:
 		break;
@@ -838,6 +946,9 @@ void G_RankPickupArmor( int self, int quantity )
 	{
 	case 5:
 		trap_RankReportInt( self, -1, QGR_KEY_ARMOR_SHARD, 1, 1 );
+		break;
+	case 25:
+		trap_RankReportInt( self, -1, QGR_KEY_ARMOR_GREEN, 1, 1 );
 		break;
 	case 50:
 		trap_RankReportInt( self, -1, QGR_KEY_ARMOR_YELLOW, 1, 1 );

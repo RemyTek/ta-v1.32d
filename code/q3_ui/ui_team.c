@@ -149,6 +149,9 @@ void TeamMain_MenuInit( void ) {
 	default:
 	case GT_TEAM:
 	case GT_CTF:
+	case GT_1FCTF:
+	case GT_OBELISK:
+	case GT_HARVESTER:
 		s_teammain.joingame.generic.flags |= QMF_GRAYED;
 		break;
 	}

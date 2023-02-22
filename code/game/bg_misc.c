@@ -59,6 +59,22 @@ gitem_t	bg_itemlist[] =
 /* sounds */ ""
 	},
 
+/*QUAKED item_armor_jacket (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+	{
+		"item_armor_jacket", 
+		"sound/misc/ar2_pkup.wav",
+        { "models/powerups/armor/armor_grn.md3",
+		0, 0, 0},
+/* icon */		"icons/iconr_green",
+/* pickup */	"Light Armor",
+		25,
+		IT_ARMOR,
+		0,
+/* precache */ "",
+/* sounds */ ""
+	},
+
 /*QUAKED item_armor_combat (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
 */
 	{
@@ -67,7 +83,7 @@ gitem_t	bg_itemlist[] =
         { "models/powerups/armor/armor_yel.md3",
 		0, 0, 0},
 /* icon */		"icons/iconr_yellow",
-/* pickup */	"Armor",
+/* pickup */	"Medium Armor",
 		50,
 		IT_ARMOR,
 		0,
@@ -634,7 +650,7 @@ Only in CTF games
 /* sounds */ ""
 	},
 
-#ifdef MISSIONPACK
+
 /*QUAKED holdable_kamikaze (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
 */
 	{
@@ -727,6 +743,22 @@ Only in CTF games
 		100,
 		IT_AMMO,
 		WP_CHAINGUN,
+/* precache */ "",
+/* sounds */ ""
+	},
+
+/*QUAKED ammo_hmg (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+	{
+		"ammo_hmg",
+		"sound/misc/am_pkup.wav",
+        { "models/powerups/ammo/hmgam.md3", 
+		0, 0, 0},
+/* icon */		"icons/ammo_hmg",
+/* pickup */	"Heavy Bullets",
+		50,
+		IT_AMMO,
+		WP_HMG,
 /* precache */ "",
 /* sounds */ ""
 	},
@@ -894,7 +926,23 @@ Only in One Flag CTF games
 /* precache */ "",
 /* sounds */ "sound/weapons/vulcan/wvulwind.wav"
 	},
-#endif
+
+/*QUAKED weapon_hmg (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+	{
+		"weapon_hmg", 
+		"sound/misc/w_pkup.wav",
+        { "models/weapons3/hmg/hmg.md3", 
+		0, 0, 0},
+/* icon */		"icons/weap_hmg",
+/* pickup */	"Heavy Machinegun",
+		100,
+		IT_WEAPON,
+		WP_HMG,
+/* precache */ "",
+/* sounds */ ""
+	},
+
 
 	// end of list marker
 	{NULL}
@@ -1018,9 +1066,9 @@ This needs to be the same for client side prediction and server use.
 */
 qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const playerState_t *ps ) {
 	gitem_t	*item;
-#ifdef MISSIONPACK
+
 	int		upperBound;
-#endif
+
 
 	if ( ent->modelindex < 1 || ent->modelindex >= bg_numItems ) {
 		Com_Error( ERR_DROP, "BG_CanItemBeGrabbed: index out of range" );
@@ -1039,7 +1087,7 @@ qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const play
 		return qtrue;
 
 	case IT_ARMOR:
-#ifdef MISSIONPACK
+
 		if( bg_itemlist[ps->stats[STAT_PERSISTANT_POWERUP]].giTag == PW_SCOUT ) {
 			return qfalse;
 		}
@@ -1055,22 +1103,22 @@ qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const play
 		if ( ps->stats[STAT_ARMOR] >= upperBound ) {
 			return qfalse;
 		}
-#else
-		if ( ps->stats[STAT_ARMOR] >= ps->stats[STAT_MAX_HEALTH] * 2 ) {
-			return qfalse;
-		}
-#endif
+
+
+
+
+
 		return qtrue;
 
 	case IT_HEALTH:
 		// small and mega healths will go over the max, otherwise
 		// don't pick up if already at max
-#ifdef MISSIONPACK
+
 		if( bg_itemlist[ps->stats[STAT_PERSISTANT_POWERUP]].giTag == PW_GUARD ) {
 			upperBound = ps->stats[STAT_MAX_HEALTH];
 		}
 		else
-#endif
+
 		if ( item->quantity == 5 || item->quantity == 100 ) {
 			if ( ps->stats[STAT_HEALTH] >= ps->stats[STAT_MAX_HEALTH] * 2 ) {
 				return qfalse;
@@ -1086,7 +1134,7 @@ qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const play
 	case IT_POWERUP:
 		return qtrue;	// powerups are always picked up
 
-#ifdef MISSIONPACK
+
 	case IT_PERSISTANT_POWERUP:
 		// can only hold one item at a time
 		if ( ps->stats[STAT_PERSISTANT_POWERUP] ) {
@@ -1102,10 +1150,10 @@ qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const play
 		}
 
 		return qtrue;
-#endif
+
 
 	case IT_TEAM: // team items, such as flags
-#ifdef MISSIONPACK		
+
 		if( gametype == GT_1FCTF ) {
 			// neutral flag can always be picked up
 			if( item->giTag == PW_NEUTRALFLAG ) {
@@ -1121,7 +1169,7 @@ qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const play
 				}
 			}
 		}
-#endif
+
 		if( gametype == GT_CTF ) {
 			// ent->modelindex2 is non-zero on items if they are dropped
 			// we need to know this because we can pick up our dropped flag (and return it)
@@ -1139,11 +1187,11 @@ qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const play
 			}
 		}
 
-#ifdef MISSIONPACK
+
 		if( gametype == GT_HARVESTER ) {
 			return qtrue;
 		}
-#endif
+
 		return qfalse;
 
 	case IT_HOLDABLE:
@@ -1342,7 +1390,7 @@ const char *eventnames[EV_MAX] = {
 	"EV_GIB_PLAYER",			// gib a previously living player
 	"EV_SCOREPLUM",			// score plum
 
-//#ifdef MISSIONPACK
+																	 
 	"EV_PROXIMITY_MINE_STICK",
 	"EV_PROXIMITY_MINE_TRIGGER",
 	"EV_KAMIKAZE",			// kamikaze explodes
@@ -1351,7 +1399,7 @@ const char *eventnames[EV_MAX] = {
 	"EV_INVUL_IMPACT",		// invulnerability sphere impact
 	"EV_JUICED",				// invulnerability juiced effect
 	"EV_LIGHTNINGBOLT",		// lightning bolt bounced of invulnerability sphere
-//#endif
+
 
 	"EV_DEBUG_LINE",
 	"EV_STOPLOOPINGSOUND",
