@@ -89,27 +89,11 @@ tryagain:
 		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
 		break;
 
-	case WP_HMG:
-		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
-		break;
-
-	case WP_CHAINGUN:
-		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
-		break;
-
 	case WP_SHOTGUN:
 		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
 		break;
 
-	case WP_NAILGUN:
-		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
-		break;
-
 	case WP_GRENADE_LAUNCHER:
-		MAKERGB( pi->flashDlightColor, 1, 0.7f, 0.5f );
-		break;
-		
-	case WP_PROX_LAUNCHER:
 		MAKERGB( pi->flashDlightColor, 1, 0.7f, 0.5f );
 		break;
 
@@ -135,6 +119,22 @@ tryagain:
 
 	case WP_GRAPPLING_HOOK:
 		MAKERGB( pi->flashDlightColor, 0.6f, 0.6f, 1 );
+		break;
+
+	case WP_NAILGUN:
+		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
+		break;
+		
+	case WP_PROX_LAUNCHER:
+		MAKERGB( pi->flashDlightColor, 1, 0.7f, 0.5f );
+		break;
+
+	case WP_CHAINGUN:
+		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
+		break;
+
+	case WP_HMG:
+		MAKERGB( pi->flashDlightColor, 1, 1, 0 );
 		break;
 
 	default:
