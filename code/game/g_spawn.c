@@ -266,6 +266,15 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 		return qfalse;
 	}
 
+	if (g_disableHMG.integer > 0) {
+		if (!Q_stricmp(ent->classname, "weapon_hmg")) {
+			ent->classname = "weapon_shotgun";
+		}
+		if (!Q_stricmp(ent->classname, "ammo_hmg")) {
+			ent->classname = "ammo_shells";
+		}
+	}
+
 	// check item spawn functions
 	for ( item=bg_itemlist+1 ; item->classname ; item++ ) {
 		if ( !strcmp(item->classname, ent->classname) ) {
@@ -433,6 +442,12 @@ void G_SpawnGEntityFromSpawnVars( void ) {
 		G_FreeEntity( ent );
 		return;
 	}
+
+	/* G_SpawnInt( "nohmg", "0", &i );
+	if ( i ) {
+		G_FreeEntity( ent );
+		return;
+	} */
 
 
 	if( G_SpawnString( "gametype", NULL, &value ) ) {

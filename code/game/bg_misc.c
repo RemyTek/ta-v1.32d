@@ -763,6 +763,23 @@ Only in CTF games
 /* sounds */ ""
 	},
 
+/*QUAKED ammo_pack (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+	{
+		"ammo_pack",
+		"sound/misc/am_pkup.wav",
+        { "models/powerups/ammo/ammopack.md3", 
+		0, 0, 0},
+/* icon */		"icons/ammo_pack",
+/* pickup */	"Ammo Pack",
+		100,
+		IT_AMMO,
+		WP_NONE,
+
+/* precache */ "",
+/* sounds */ ""
+	},
+
 	//
 	// PERSISTANT POWERUP ITEMS
 	//

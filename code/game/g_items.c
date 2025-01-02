@@ -35,6 +35,20 @@
 #define	RESPAWN_MEGAHEALTH	35000 //120000
 #define	RESPAWN_POWERUP		120000
 
+gitem_t ammo_pack = 
+{
+    "ammo_pack",
+    "sound/misc/am_pkup.wav",
+    { "models/powerups/ammo/ammopack.md3", 0, 0, 0 },
+    "icons/ammo_pack",
+    "Ammo Pack",
+    0, // No initial quantity for ammo pack
+    IT_AMMO,
+    WP_NONE,
+    "",
+    ""
+};
+
 //======================================================================
 
 int SpawnTime( gentity_t *ent, qboolean firstSpawn ) 
@@ -243,6 +257,52 @@ int Pickup_Holdable( gentity_t *ent, gentity_t *other ) {
 
 //======================================================================
 
+// Function to distribute ammo to all owned weapons with specific values
+void DistributeAmmoPack(gentity_t *ent) 
+{
+	int i;
+    // Define ammo amounts per weapon (adjusted order)
+    int ammoPerWeapon[WP_NUM_WEAPONS] = {
+        0,   // WP_GAUNTLET
+        50,  // WP_MACHINEGUN 
+        10,  // WP_SHOTGUN
+        5,   // WP_GRENADE_LAUNCHER
+        5,   // WP_ROCKET_LAUNCHER
+        60,  // WP_LIGHTNING
+        10,  // WP_RAILGUN
+        30,  // WP_PLASMAGUN
+        15,  // WP_BFG
+        0,   // WP_GRAPPLING_HOOK
+        20,  // WP_NAILGUN
+        10,  // WP_PROX_LAUNCHER
+        100, // WP_CHAINGUN
+        50   // WP_HMG
+    };
+
+    // Iterate through all weapons
+    for (i = 0; i < WP_NUM_WEAPONS; i++) 
+    {
+        // Check if the player possesses the weapon
+        if (ent->client->ps.stats[STAT_WEAPONS] & (1 << i)) 
+        {
+            // Check if the weapon uses ammo
+            if (ammoPerWeapon[i-1] > 0) 
+            {
+                // Add ammo to the player's ammo count
+                ent->client->ps.ammo[i] += ammoPerWeapon[i-1];
+
+                // Clamp ammo to maximum allowed (adjust as needed)
+                if (ent->client->ps.ammo[i] > AMMO_HARD_LIMIT) 
+                {
+                    ent->client->ps.ammo[i] = AMMO_HARD_LIMIT; 
+                }
+            }
+        }
+    }
+}
+
+//======================================================================
+
 
 static void Add_Ammo( gentity_t *ent, int weapon, int count )
 {
@@ -257,13 +317,18 @@ static int Pickup_Ammo( gentity_t *ent, gentity_t *other )
 {
 	int		quantity;
 
-	if ( ent->count ) {
-		quantity = ent->count;
+	if (!Q_stricmp(ent->classname, "ammo_pack")) {
+		// distribute ammo pack
+		DistributeAmmoPack(other);
 	} else {
-		quantity = ent->item->quantity;
-	}
+		if ( ent->count ) {
+			quantity = ent->count;
+		} else {
+			quantity = ent->item->quantity;
+		}
 
-	Add_Ammo( other, ent->item->giTag, quantity );
+		Add_Ammo( other, ent->item->giTag, quantity );
+	}
 
 	return SpawnTime( ent, qfalse ); // return RESPAWN_AMMO;
 }
