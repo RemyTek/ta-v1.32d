@@ -35,7 +35,7 @@
 #define	RESPAWN_MEGAHEALTH	35000 //120000
 #define	RESPAWN_POWERUP		120000
 
-gitem_t ammo_pack = 
+/* gitem_t ammo_pack = 
 {
     "ammo_pack",
     "sound/misc/am_pkup.wav",
@@ -47,7 +47,7 @@ gitem_t ammo_pack =
     WP_NONE,
     "",
     ""
-};
+}; */
 
 //======================================================================
 
@@ -317,7 +317,7 @@ static int Pickup_Ammo( gentity_t *ent, gentity_t *other )
 {
 	int		quantity;
 
-	if (!Q_stricmp(ent->classname, "ammo_pack")) {
+	if (!Q_stricmp(ent->classname, "ammo_pack") && !(g_ammopack.integer > 0)) {
 		// distribute ammo pack
 		DistributeAmmoPack(other);
 	} else {

@@ -249,6 +249,14 @@ spawn_t	spawns[] = {
 	{0, 0}
 };
 
+void checkAmmoPack (gentity_t *ent)
+{
+	if (!Q_stricmp(ent->classname, "ammo_pack"))
+	{
+		G_FreeEntity(ent);
+	}
+}
+
 /*
 ===============
 G_CallSpawn
@@ -264,6 +272,10 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 	if ( !ent->classname ) {
 		G_Printf ("G_CallSpawn: NULL classname\n");
 		return qfalse;
+	}
+
+	if (!g_ammopack.integer > 0) {
+		checkAmmoPack(ent);
 	}
 
 	if (g_disableHMG.integer > 0) {
