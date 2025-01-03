@@ -438,8 +438,8 @@ void G_SpawnGEntityFromSpawnVars( void ) {
 
 	// Check for overlapping armor items
     if (!Q_stricmp(ent->classname, "item_armor_combat")) {
-        for ( i = 0; i < level.num_entities; i++ ) {
-			for ( j = 0; j < level.num_entities; j++ ) {
+        for ( i = MAX_CLIENTS; i < level.num_entities; i++ ) {
+			for ( j = MAX_CLIENTS; j < level.num_entities; j++ ) {
 				comp = &g_entities[j];
 				other = &g_entities[i];
             	if (other == comp) {
