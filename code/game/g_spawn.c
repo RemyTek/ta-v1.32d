@@ -404,7 +404,10 @@ level.spawnVars[], then call the class specfic spawn function
 */
 void G_SpawnGEntityFromSpawnVars( void ) {
 	int			i;
+	int			j;
 	gentity_t	*ent;
+	gentity_t	*comp;
+	gentity_t	*other;
 	char		*s, *value, *gametypeName;
 	static char *gametypeNames[] = {"ffa", "tournament", "single", "team", "ctf", "oneflag", "obelisk", "harvester", "teamtournament"};
 
@@ -433,6 +436,28 @@ void G_SpawnGEntityFromSpawnVars( void ) {
 		}
 	}
 
+	// Check for overlapping armor items
+    if (!Q_stricmp(ent->classname, "item_armor_combat")) {
+        for ( i = 0; i < level.num_entities; i++ ) {
+			for ( j = 0; j < level.num_entities; j++ ) {
+				comp = &g_entities[j];
+				other = &g_entities[i];
+            	if (other == comp) {
+                	continue;
+            	}
+            	if (!Q_stricmp(other->classname, "item_armor_jacket") || !Q_stricmp(other->classname, "item_armor_green")) {
+                	// Disable item_armor_combat if item_armor_jacket exists at the same coordinates
+					if (VectorCompare(comp->r.currentOrigin, other->r.currentOrigin)) {
+                    	ADJUST_AREAPORTAL();
+                    	G_FreeEntity(ent);
+                    	return;
+                	}
+            	}
+			}
+        }
+    }
+
+	// enable/disable runes
 	if (!g_runes.integer) {
 		if (!Q_stricmp(ent->classname, "item_guard") || !Q_stricmp(ent->classname, "item_doubler") || !Q_stricmp(ent->classname, "item_ammoregen") || !Q_stricmp(ent->classname, "item_scout")) {
 			ADJUST_AREAPORTAL();
@@ -476,12 +501,6 @@ void G_SpawnGEntityFromSpawnVars( void ) {
 		G_FreeEntity( ent );
 		return;
 	}
-
-	/* G_SpawnInt( "nohmg", "0", &i );
-	if ( i ) {
-		G_FreeEntity( ent );
-		return;
-	} */
 
 
 	if( G_SpawnString( "gametype", NULL, &value ) ) {
