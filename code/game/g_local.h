@@ -810,6 +810,7 @@ extern	vmCvar_t	g_singlePlayer;
 extern	vmCvar_t	g_proxMineTimeout;
 extern	vmCvar_t	g_disableHMG;
 extern	vmCvar_t	g_ammopack;
+extern	vmCvar_t	g_runes;
 
 void	trap_Print( const char *text );
 void	trap_Error( const char *text );

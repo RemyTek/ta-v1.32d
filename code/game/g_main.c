@@ -79,6 +79,7 @@ vmCvar_t	g_enableBreath;
 vmCvar_t	g_proxMineTimeout;
 vmCvar_t	g_disableHMG;
 vmCvar_t	g_ammopack;
+vmCvar_t	g_runes;
 
 
 static cvarTable_t gameCvarTable[] = {
@@ -164,6 +165,7 @@ static cvarTable_t gameCvarTable[] = {
 	{ &g_proxMineTimeout, "g_proxMineTimeout", "20000", 0, 0, qfalse },
 	{ &g_disableHMG, "g_disableHMG", "0", 0, 0, qfalse },
 	{ &g_ammopack, "g_ammopack", "0", 0, 0, qfalse },
+	{ &g_runes, "g_runes", "0", 0, 0, qfalse },
 	{ &g_smoothClients, "g_smoothClients", "1", 0, 0, qfalse},
 	{ &pmove_fixed, "pmove_fixed", "0", CVAR_SYSTEMINFO, 0, qfalse},
 	{ &pmove_msec, "pmove_msec", "8", CVAR_SYSTEMINFO, 0, qfalse},

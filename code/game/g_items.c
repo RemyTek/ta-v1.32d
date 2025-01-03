@@ -317,9 +317,9 @@ static int Pickup_Ammo( gentity_t *ent, gentity_t *other )
 {
 	int		quantity;
 
-	if (!Q_stricmp(ent->classname, "ammo_pack") && !(g_ammopack.integer > 0)) {
+	if ( !Q_stricmp(ent->classname, "ammo_pack" ) && ( g_ammopack.integer )) {
 		// distribute ammo pack
-		DistributeAmmoPack(other);
+		DistributeAmmoPack( other );
 	} else {
 		if ( ent->count ) {
 			quantity = ent->count;

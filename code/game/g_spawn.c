@@ -249,13 +249,13 @@ spawn_t	spawns[] = {
 	{0, 0}
 };
 
-void checkAmmoPack (gentity_t *ent)
+/* void checkAmmoPack (gentity_t *ent)
 {
 	if (!Q_stricmp(ent->classname, "ammo_pack"))
 	{
 		G_FreeEntity(ent);
 	}
-}
+} */
 
 /*
 ===============
@@ -274,9 +274,9 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 		return qfalse;
 	}
 
-	if (!g_ammopack.integer > 0) {
+	/* if (!g_ammopack.integer > 0) {
 		checkAmmoPack(ent);
-	}
+	} */
 
 	if (g_disableHMG.integer > 0) {
 		if (!Q_stricmp(ent->classname, "weapon_hmg")) {
@@ -285,6 +285,10 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 		if (!Q_stricmp(ent->classname, "ammo_hmg")) {
 			ent->classname = "ammo_shells";
 		}
+	}
+
+	if (!Q_stricmp(ent->classname, "item_armor_green")) {
+		ent->classname = "item_armor_jacket";
 	}
 
 	// check item spawn functions
@@ -395,8 +399,12 @@ void G_ParseField( const char *key, const char *value, gentity_t *ent ) {
 	}
 }
 
-
-
+#define ADJUST_AREAPORTAL() \
+	if(ent->s.eType == ET_MOVER) \
+	{ \
+		trap_LinkEntity(ent);					\
+		trap_AdjustAreaPortalState(ent, qtrue); \
+	}
 
 /*
 ===================
@@ -417,6 +425,32 @@ void G_SpawnGEntityFromSpawnVars( void ) {
 
 	for ( i = 0 ; i < level.numSpawnVars ; i++ ) {
 		G_ParseField( level.spawnVars[i][0], level.spawnVars[i][1], ent );
+	}
+
+	// check ammopack settings
+	if (g_ammopack.integer) {
+		if (!Q_stricmp(ent->classname, "ammo_pack")) {
+			//pass add it
+		} else if (!Q_stricmpn(ent->classname, "ammo_", 5)) {
+			// ignore other types of ammo
+			ADJUST_AREAPORTAL();
+			G_FreeEntity( ent );
+			return;
+		}
+	} else {
+		if (!Q_stricmp(ent->classname, "ammo_pack")) {
+			ADJUST_AREAPORTAL();
+			G_FreeEntity( ent );
+			return;
+		}
+	}
+
+	if (!g_runes.integer) {
+		if (!Q_stricmp(ent->classname, "item_guard") || !Q_stricmp(ent->classname, "item_doubler") || !Q_stricmp(ent->classname, "item_ammoregen") || !Q_stricmp(ent->classname, "item_scout")) {
+			ADJUST_AREAPORTAL();
+			G_FreeEntity( ent );
+			return;
+		}
 	}
 
 	// check for "notsingle" flag
