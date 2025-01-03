@@ -163,7 +163,7 @@ static cvarTable_t gameCvarTable[] = {
 	{ &g_enableDust, "g_enableDust", "0", CVAR_SERVERINFO, 0, qtrue, qfalse },
 	{ &g_enableBreath, "g_enableBreath", "0", CVAR_SERVERINFO, 0, qtrue, qfalse },
 	{ &g_proxMineTimeout, "g_proxMineTimeout", "20000", 0, 0, qfalse },
-	{ &g_disableHMG, "g_disableHMG", "0", 0, 0, qfalse },
+	{ &g_disableHMG, "g_disableHMG", "1", 0, 0, qfalse },
 	{ &g_ammopack, "g_ammopack", "0", 0, 0, qfalse },
 	{ &g_runes, "g_runes", "0", 0, 0, qfalse },
 	{ &g_smoothClients, "g_smoothClients", "1", 0, 0, qfalse},
