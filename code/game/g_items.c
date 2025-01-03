@@ -35,20 +35,6 @@
 #define	RESPAWN_MEGAHEALTH	35000 //120000
 #define	RESPAWN_POWERUP		120000
 
-/* gitem_t ammo_pack = 
-{
-    "ammo_pack",
-    "sound/misc/am_pkup.wav",
-    { "models/powerups/ammo/ammopack.md3", 0, 0, 0 },
-    "icons/ammo_pack",
-    "Ammo Pack",
-    0, // No initial quantity for ammo pack
-    IT_AMMO,
-    WP_NONE,
-    "",
-    ""
-}; */
-
 //======================================================================
 
 int SpawnTime( gentity_t *ent, qboolean firstSpawn ) 

@@ -249,14 +249,6 @@ spawn_t	spawns[] = {
 	{0, 0}
 };
 
-/* void checkAmmoPack (gentity_t *ent)
-{
-	if (!Q_stricmp(ent->classname, "ammo_pack"))
-	{
-		G_FreeEntity(ent);
-	}
-} */
-
 /*
 ===============
 G_CallSpawn
@@ -274,20 +266,16 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 		return qfalse;
 	}
 
-	/* if (!g_ammopack.integer > 0) {
-		checkAmmoPack(ent);
-	} */
-
-	if (g_disableHMG.integer > 0) {
-		if (!Q_stricmp(ent->classname, "weapon_hmg")) {
+	if ( g_disableHMG.integer ) {
+		if ( !Q_stricmp( ent->classname, "weapon_hmg" )) {
 			ent->classname = "weapon_shotgun";
 		}
-		if (!Q_stricmp(ent->classname, "ammo_hmg")) {
+		if ( !Q_stricmp(ent->classname, "ammo_hmg" )) {
 			ent->classname = "ammo_shells";
 		}
 	}
 
-	if (!Q_stricmp(ent->classname, "item_armor_green")) {
+	if (!Q_stricmp( ent->classname, "item_armor_green" )) {
 		ent->classname = "item_armor_jacket";
 	}
 
