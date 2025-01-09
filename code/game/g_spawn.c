@@ -287,9 +287,7 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 	gentity_t	*other;
 	const char *checkClassname1, *checkClassname2;
 
-	//FIXME:
 	// Check for overlapping specified items
-
 	const char *taitems[] = {
 		"weapon_chaingun",
 		"weapon_nailgun",
@@ -303,16 +301,7 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 
 	num_taitems = ARRAY_LEN(taitems);
 
-	/* if ( g_disableHMG.integer ) {
-		if ( !Q_stricmp( ent->classname, "weapon_hmg" )) {
-			ent->classname = "weapon_shotgun";
-		}
-		if ( !Q_stricmp(ent->classname, "ammo_hmg" )) {
-			ent->classname = "ammo_shells";
-		}
-	} */
-
-	// Existing code with collision check
+	// Collision check
 	if ( g_disableHMG.integer ) {
 		if ( !Q_stricmp(ent->classname, "weapon_hmg") && CheckCollision(ent, "weapon_hmg", "weapon_shotgun") ) {
 			G_FreeEntity(ent);
@@ -330,7 +319,6 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 	}
 
 	if ( g_taitems.integer ) {
-		//FIXME:
 		for (i = MAX_CLIENTS; i < level.num_entities; i++) {
 			other = &g_entities[i];
 
