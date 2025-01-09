@@ -249,6 +249,27 @@ spawn_t	spawns[] = {
 	{0, 0}
 };
 
+#define ADJUST_AREAPORTAL() \
+	if(ent->s.eType == ET_MOVER) \
+	{ \
+		trap_LinkEntity(ent);					\
+		trap_AdjustAreaPortalState(ent, qtrue); \
+	}
+
+// Function to check for collision based on position
+qboolean CheckCollision(gentity_t *ent, const char *classname1, const char *classname2) {
+    gentity_t *other;
+	int i;
+    for (i = MAX_CLIENTS; i < level.num_entities; i++) {
+        other = &g_entities[i];
+        if (( !Q_stricmp(other->classname, classname1) || !Q_stricmp(other->classname, classname2) ) &&
+            VectorCompare(ent->s.origin, other->s.origin)) {
+            return qtrue;
+        }
+    }
+    return qfalse;
+}
+
 /*
 ===============
 G_CallSpawn
@@ -260,19 +281,162 @@ returning qfalse if not found
 qboolean G_CallSpawn( gentity_t *ent ) {
 	spawn_t	*s;
 	gitem_t	*item;
+	int			i, j, k;
+	int			otherIsInTaitems, compIsInTaitems, num_taitems;
+	gentity_t	*comp;
+	gentity_t	*other;
+	const char *checkClassname1, *checkClassname2;
 
-	if ( !ent->classname ) {
-		G_Printf ("G_CallSpawn: NULL classname\n");
-		return qfalse;
-	}
+	//FIXME:
+	// Check for overlapping specified items
 
-	if ( g_disableHMG.integer ) {
+	const char *taitems[] = {
+		"weapon_chaingun",
+		"weapon_nailgun",
+		"weapon_prox_launcher",
+		"ammo_belt",
+		"ammo_mines",
+		"ammo_nails",
+		"holdable_invulnerability",
+		"holdable_kamikaze"
+	};
+
+	num_taitems = ARRAY_LEN(taitems);
+
+	/* if ( g_disableHMG.integer ) {
 		if ( !Q_stricmp( ent->classname, "weapon_hmg" )) {
 			ent->classname = "weapon_shotgun";
 		}
 		if ( !Q_stricmp(ent->classname, "ammo_hmg" )) {
 			ent->classname = "ammo_shells";
 		}
+	} */
+
+	// Existing code with collision check
+	if ( g_disableHMG.integer ) {
+		if ( !Q_stricmp(ent->classname, "weapon_hmg") && CheckCollision(ent, "weapon_hmg", "weapon_shotgun") ) {
+			G_FreeEntity(ent);
+		}
+		else if ( !Q_stricmp(ent->classname, "ammo_hmg") && CheckCollision(ent, "ammo_hmg", "ammo_shells") ) {
+			G_FreeEntity(ent);
+		}
+	} else {
+		if ( !Q_stricmp(ent->classname, "weapon_shotgun") && CheckCollision(ent, "weapon_shotgun", "weapon_hmg") ) {
+			G_FreeEntity(ent);
+		}
+		else if ( !Q_stricmp(ent->classname, "ammo_shells") && CheckCollision(ent, "ammo_shells", "ammo_hmg") ) {
+			G_FreeEntity(ent);
+		}
+	}
+
+	if ( g_taitems.integer ) {
+		//FIXME:
+		for (i = MAX_CLIENTS; i < level.num_entities; i++) {
+			other = &g_entities[i];
+
+			// Check if 'other' is in taitems
+			otherIsInTaitems = 0;
+			for (k = 0; k < num_taitems; k++) {
+				if (!Q_stricmp(other->classname, taitems[k])) {
+					otherIsInTaitems = 1;
+					break;
+				}
+			}
+
+			if (otherIsInTaitems) {
+				for (j = MAX_CLIENTS; j < level.num_entities; j++) {
+					if (i == j) {
+						continue;
+					}
+
+					comp = &g_entities[j];
+
+					if (VectorCompare(other->r.currentOrigin, comp->r.currentOrigin)) {
+						// Check if 'comp' is not in taitems before removing it
+						compIsInTaitems = 0;
+						for (k = 0; k < num_taitems; k++) {
+							if (!Q_stricmp(comp->classname, taitems[k])) {
+								compIsInTaitems = 1;
+								break;
+							}
+						}
+
+						if (!g_disableHMG.integer && !Q_stricmp(comp->classname, "weapon_hmg") || !Q_stricmp(comp->classname, "ammo_hmg")) {
+							ADJUST_AREAPORTAL();
+							G_FreeEntity( other );
+						}
+						else if (!compIsInTaitems) {
+							ADJUST_AREAPORTAL();
+							G_FreeEntity(comp);
+						}
+					}
+				}
+			}
+		}
+	} else {
+		for (i = MAX_CLIENTS; i < level.num_entities; i++) {
+			other = &g_entities[i];
+			for ( j = 0; j < num_taitems; j++ ) {
+				if (!Q_stricmp(other->classname, taitems[j])) {
+					ADJUST_AREAPORTAL();
+					G_FreeEntity(other);
+					break;
+				}
+			}
+		}
+	}
+
+	// check ammopack settings
+	if (g_ammopack.integer) {
+		if (!Q_stricmp(ent->classname, "ammo_pack")) {
+			//pass add it
+		} else if (!Q_stricmpn(ent->classname, "ammo_", 5)) {
+			// ignore other types of ammo
+			ADJUST_AREAPORTAL();
+			G_FreeEntity( ent );
+			return;
+		}
+	} else {
+		if (!Q_stricmp(ent->classname, "ammo_pack")) {
+			ADJUST_AREAPORTAL();
+			G_FreeEntity( ent );
+			return;
+		}
+	}
+
+	// Check for overlapping armor items
+    if (!Q_stricmp(ent->classname, "item_armor_combat")) {
+        for ( i = MAX_CLIENTS; i < level.num_entities; i++ ) {
+			for ( j = MAX_CLIENTS; j < level.num_entities; j++ ) {
+				comp = &g_entities[j];
+				other = &g_entities[i];
+            	if (other == comp) {
+                	continue;
+            	}
+            	if (!Q_stricmp(other->classname, "item_armor_jacket") || !Q_stricmp(other->classname, "item_armor_green")) {
+                	// Disable item_armor_combat if item_armor_jacket exists at the same coordinates
+					if (VectorCompare(comp->r.currentOrigin, other->r.currentOrigin)) {
+                    	ADJUST_AREAPORTAL();
+                    	G_FreeEntity(ent);
+                    	return;
+                	}
+            	}
+			}
+        }
+    }
+
+	// enable/disable runes
+	if (!g_runes.integer) {
+		if (!Q_stricmp(ent->classname, "item_guard") || !Q_stricmp(ent->classname, "item_doubler") || !Q_stricmp(ent->classname, "item_ammoregen") || !Q_stricmp(ent->classname, "item_scout")) {
+			ADJUST_AREAPORTAL();
+			G_FreeEntity( ent );
+			return;
+		}
+	}
+
+	if ( !ent->classname ) {
+		G_Printf ("G_CallSpawn: NULL classname\n");
+		return qfalse;
 	}
 
 	if (!Q_stricmp( ent->classname, "item_armor_green" )) {
@@ -387,13 +551,6 @@ void G_ParseField( const char *key, const char *value, gentity_t *ent ) {
 	}
 }
 
-#define ADJUST_AREAPORTAL() \
-	if(ent->s.eType == ET_MOVER) \
-	{ \
-		trap_LinkEntity(ent);					\
-		trap_AdjustAreaPortalState(ent, qtrue); \
-	}
-
 /*
 ===================
 G_SpawnGEntityFromSpawnVars
@@ -403,67 +560,16 @@ level.spawnVars[], then call the class specfic spawn function
 ===================
 */
 void G_SpawnGEntityFromSpawnVars( void ) {
-	int			i;
-	int			j;
 	gentity_t	*ent;
-	gentity_t	*comp;
-	gentity_t	*other;
+	int			i;
 	char		*s, *value, *gametypeName;
 	static char *gametypeNames[] = {"ffa", "tournament", "single", "team", "ctf", "oneflag", "obelisk", "harvester", "teamtournament"};
-
+	
 	// get the next free entity
 	ent = G_Spawn();
 
 	for ( i = 0 ; i < level.numSpawnVars ; i++ ) {
 		G_ParseField( level.spawnVars[i][0], level.spawnVars[i][1], ent );
-	}
-
-	// check ammopack settings
-	if (g_ammopack.integer) {
-		if (!Q_stricmp(ent->classname, "ammo_pack")) {
-			//pass add it
-		} else if (!Q_stricmpn(ent->classname, "ammo_", 5)) {
-			// ignore other types of ammo
-			ADJUST_AREAPORTAL();
-			G_FreeEntity( ent );
-			return;
-		}
-	} else {
-		if (!Q_stricmp(ent->classname, "ammo_pack")) {
-			ADJUST_AREAPORTAL();
-			G_FreeEntity( ent );
-			return;
-		}
-	}
-
-	// Check for overlapping armor items
-    if (!Q_stricmp(ent->classname, "item_armor_combat")) {
-        for ( i = MAX_CLIENTS; i < level.num_entities; i++ ) {
-			for ( j = MAX_CLIENTS; j < level.num_entities; j++ ) {
-				comp = &g_entities[j];
-				other = &g_entities[i];
-            	if (other == comp) {
-                	continue;
-            	}
-            	if (!Q_stricmp(other->classname, "item_armor_jacket") || !Q_stricmp(other->classname, "item_armor_green")) {
-                	// Disable item_armor_combat if item_armor_jacket exists at the same coordinates
-					if (VectorCompare(comp->r.currentOrigin, other->r.currentOrigin)) {
-                    	ADJUST_AREAPORTAL();
-                    	G_FreeEntity(ent);
-                    	return;
-                	}
-            	}
-			}
-        }
-    }
-
-	// enable/disable runes
-	if (!g_runes.integer) {
-		if (!Q_stricmp(ent->classname, "item_guard") || !Q_stricmp(ent->classname, "item_doubler") || !Q_stricmp(ent->classname, "item_ammoregen") || !Q_stricmp(ent->classname, "item_scout")) {
-			ADJUST_AREAPORTAL();
-			G_FreeEntity( ent );
-			return;
-		}
 	}
 
 	// check for "notsingle" flag
