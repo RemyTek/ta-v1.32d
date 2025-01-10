@@ -381,14 +381,12 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 		} else if (!Q_stricmpn(ent->classname, "ammo_", 5)) {
 			// ignore other types of ammo
 			ADJUST_AREAPORTAL();
-			G_FreeEntity( ent );
-			return;
+			G_FreeEntity( ent );			
 		}
 	} else {
 		if (!Q_stricmp(ent->classname, "ammo_pack")) {
 			ADJUST_AREAPORTAL();
 			G_FreeEntity( ent );
-			return;
 		}
 	}
 
@@ -406,7 +404,6 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 					if (VectorCompare(comp->r.currentOrigin, other->r.currentOrigin)) {
                     	ADJUST_AREAPORTAL();
                     	G_FreeEntity(ent);
-                    	return;
                 	}
             	}
 			}
@@ -417,8 +414,22 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 	if (!g_runes.integer) {
 		if (!Q_stricmp(ent->classname, "item_guard") || !Q_stricmp(ent->classname, "item_doubler") || !Q_stricmp(ent->classname, "item_ammoregen") || !Q_stricmp(ent->classname, "item_scout")) {
 			ADJUST_AREAPORTAL();
-			G_FreeEntity( ent );
-			return;
+			G_FreeEntity(ent);
+		}
+	} else {
+		if (!Q_stricmp(ent->classname, "item_guard") || !Q_stricmp(ent->classname, "item_doubler") || !Q_stricmp(ent->classname, "item_ammoregen") || !Q_stricmp(ent->classname, "item_scout")) {			
+			for (i = MAX_CLIENTS; i < level.num_entities; i++) {
+				other = &g_entities[i];
+
+				if (other == ent) {
+					continue;
+				}
+
+				if (VectorCompare(ent->r.currentOrigin, other->r.currentOrigin)) {
+					ADJUST_AREAPORTAL();
+					G_FreeEntity(other);
+				}
+			}
 		}
 	}
 
