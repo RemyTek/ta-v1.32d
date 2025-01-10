@@ -318,7 +318,7 @@ qboolean G_CallSpawn( gentity_t *ent ) {
 		}
 	}
 
-	if ( g_taitems.integer ) {
+	if ( g_teamarena.integer ) {
 		for (i = MAX_CLIENTS; i < level.num_entities; i++) {
 			other = &g_entities[i];
 
