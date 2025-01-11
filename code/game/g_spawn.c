@@ -411,13 +411,11 @@ qboolean G_CallSpawn( gentity_t *ent ) {
     }
 
 	// enable/disable runes
-	if (!g_runes.integer) {
-		if (!Q_stricmp(ent->classname, "item_guard") || !Q_stricmp(ent->classname, "item_doubler") || !Q_stricmp(ent->classname, "item_ammoregen") || !Q_stricmp(ent->classname, "item_scout")) {
+	if (!Q_stricmp(ent->classname, "item_guard") || !Q_stricmp(ent->classname, "item_doubler") || !Q_stricmp(ent->classname, "item_ammoregen") || !Q_stricmp(ent->classname, "item_scout")) {
+		if(!g_runes.integer) {
 			ADJUST_AREAPORTAL();
 			G_FreeEntity(ent);
-		}
-	} else {
-		if (!Q_stricmp(ent->classname, "item_guard") || !Q_stricmp(ent->classname, "item_doubler") || !Q_stricmp(ent->classname, "item_ammoregen") || !Q_stricmp(ent->classname, "item_scout")) {			
+		} else {
 			for (i = MAX_CLIENTS; i < level.num_entities; i++) {
 				other = &g_entities[i];
 
